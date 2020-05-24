@@ -1,0 +1,49 @@
+//
+//  Modifiers.swift
+//  Slot Machine UI
+//
+//  Created by José Javier Cueto Mejía on 24/05/20.
+//  Copyright © 2020 Pozolx. All rights reserved.
+//
+
+import SwiftUI
+
+struct ShadowModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .shadow(color: Color("ColorTransparentBlack"), radius: 0, x: 0, y: 6)
+    }
+}
+
+
+struct ButtonModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .font(.title)
+        .accentColor(.white)
+    }
+}
+
+
+struct ScoreNumberModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .shadow(color: Color("ColorTransparentBlack"), radius: 0, x: 0, y: 3)
+        .layoutPriority(1)
+    }
+}
+
+struct ScoreContainerModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .padding(.vertical, 4)
+            .padding(.horizontal, 16)
+            .frame(maxWidth: 128)
+            .background(Capsule().foregroundColor(Color("ColorTransparentBlack"))
+                
+        )
+    }
+}
+
+
+
