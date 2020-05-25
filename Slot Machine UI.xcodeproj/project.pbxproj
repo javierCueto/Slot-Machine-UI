@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF7227EB247C83B0004A6FE8 /* ReelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7227EA247C83B0004A6FE8 /* ReelView.swift */; };
 		CFBC48EB247B08550015FB43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC48EA247B08550015FB43 /* AppDelegate.swift */; };
 		CFBC48ED247B08550015FB43 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC48EC247B08550015FB43 /* SceneDelegate.swift */; };
 		CFBC48EF247B08550015FB43 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC48EE247B08550015FB43 /* ContentView.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF7227EA247C83B0004A6FE8 /* ReelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelView.swift; sourceTree = "<group>"; };
 		CFBC48E7247B08550015FB43 /* Slot Machine UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Slot Machine UI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFBC48EA247B08550015FB43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CFBC48EC247B08550015FB43 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				CFBC48EE247B08550015FB43 /* ContentView.swift */,
 				CFBC4911247B10330015FB43 /* LogoView.swift */,
+				CF7227EA247C83B0004A6FE8 /* ReelView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				CFBC4912247B10330015FB43 /* LogoView.swift in Sources */,
 				CFBC4916247B1CB40015FB43 /* Extentions.swift in Sources */,
 				CFBC48ED247B08550015FB43 /* SceneDelegate.swift in Sources */,
+				CF7227EB247C83B0004A6FE8 /* ReelView.swift in Sources */,
 				CFBC48EF247B08550015FB43 /* ContentView.swift in Sources */,
 				CFBC4914247B152B0015FB43 /* Modifiers.swift in Sources */,
 			);
