@@ -22,6 +22,13 @@ struct ContentView: View {
     @State private var reels: Array = [0,1,2]
     @State private var showingInfoView: Bool = false
     
+    @State private var isActivateBet10: Bool = true
+    @State private var isActivateBet20: Bool = false
+    @State private var showingModal: Bool = true
+    
+    @State private var animatingModal: Bool = true
+    
+    
     
     //MARK: - functions
     // spin reels
@@ -65,7 +72,24 @@ struct ContentView: View {
         coins -= betAmount
     }
     
+    func activateBet20(){
+        betAmount = 20
+        isActivateBet20 = true
+        isActivateBet10 = false
+    }
+    
+    func activateBet10(){
+        betAmount = 10
+        isActivateBet20 = false
+        isActivateBet10 = true
+    }
+    
     //game is over
+    func isGameOver(){
+        if coins <= 0 {
+            showingModal = true
+        }
+    }
     
     //MARK: - body
     var body: some View {
@@ -147,6 +171,9 @@ struct ContentView: View {
                         
                         //check winning
                         self.checkWinning()
+                        
+                        // game over
+                        self.isGameOver()
                     }){
                         Image("gfx-spin")
                             .renderingMode(.original)
@@ -165,10 +192,11 @@ struct ContentView: View {
                     HStack(spacing: 10) {
                         Button(action: {
                             print("20 coins")
+                            self.activateBet20()
                         }){
                             Text("20")
                                 .fontWeight(.heavy)
-                                .foregroundColor(.white)
+                                .foregroundColor(isActivateBet20 ? Color("ColorYellow") : .white)
                                 .modifier(BetNumberModifier())
                         }
                         .modifier(BetCapsuleModifier())
@@ -176,7 +204,7 @@ struct ContentView: View {
                         
                         Image("gfx-casino-chips")
                             .resizable()
-                            .opacity(0)
+                            .opacity(isActivateBet20 ? 1 :0)
                             .modifier(CasinoChipsModifier())
                     }
                     
@@ -184,15 +212,16 @@ struct ContentView: View {
                     HStack(spacing: 10) {
                         Image("gfx-casino-chips")
                             .resizable()
-                            .opacity(1)
+                            .opacity(isActivateBet10 ? 1 :0)
                             .modifier(CasinoChipsModifier())
                         
                         Button(action: {
                             print("10 coins")
+                            self.activateBet10()
                         }){
                             Text("10")
                                 .fontWeight(.heavy)
-                                .foregroundColor(.yellow)
+                                .foregroundColor(isActivateBet10 ? Color("ColorYellow") : .white)
                                 .modifier(BetNumberModifier())
                         }
                         .modifier(BetCapsuleModifier())
@@ -231,7 +260,74 @@ struct ContentView: View {
                 
                 .padding()
                 .frame(maxWidth: 720)
+                .blur(radius: $showingModal.wrappedValue ? 5 : 0, opaque: false)
             //MARK: - popup
+            if $showingModal.wrappedValue {
+                ZStack{
+                    Color("ColorTransparentBlack").edgesIgnoringSafeArea(.all)
+                    
+                    // MODAL
+                    VStack(spacing: 0) {
+                        // TITLE
+                        Text("GAME OVER")
+                            .font(.system(.title, design: .rounded))
+                            .fontWeight(.heavy)
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .background(Color("ColorPink"))
+                            .foregroundColor(Color.white)
+                        
+                        Spacer()
+                        
+                        // MESSAGE
+                        VStack(alignment: .center, spacing: 16) {
+                            Image("gfx-seven-reel")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxHeight: 72)
+                            
+                            Text("Bad luck! You lost all of the coins. \nLet's play again!")
+                                .font(.system(.body, design: .rounded))
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color.gray)
+                                .layoutPriority(1)
+                            
+                            Button(action: {
+                                self.showingModal = false
+                                self.animatingModal = false
+                                self.activateBet10()
+                                self.coins = 100
+                            }) {
+                                Text("New Game".uppercased())
+                                    .font(.system(.body, design: .rounded))
+                                    .fontWeight(.semibold)
+                                    .accentColor(Color("ColorPink"))
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 8)
+                                    .frame(minWidth: 128)
+                                    .background(
+                                        Capsule()
+                                            .strokeBorder(lineWidth: 1.75)
+                                            .foregroundColor(Color("ColorPink"))
+                                )
+                            }
+                        }
+                        
+                        Spacer()
+                    }
+                    .frame(minWidth: 280, idealWidth: 280, maxWidth: 320, minHeight: 260, idealHeight: 280, maxHeight: 320, alignment: .center)
+                    .background(Color.white)
+                    .cornerRadius(20)
+                    .shadow(color: Color("ColorTransparentBlack"), radius: 6, x: 0, y: 8)
+                    .opacity($animatingModal.wrappedValue ? 1 : 0)
+                    .offset(y: $animatingModal.wrappedValue ? 0 : -100)
+                    .animation(Animation.spring(response: 0.6, dampingFraction: 1.0, blendDuration: 1.0))
+                    .onAppear(perform: {
+                        self.animatingModal = true
+                    })
+                }
+            }
         }
         .sheet(isPresented: self.$showingInfoView) {
             InfoView()
