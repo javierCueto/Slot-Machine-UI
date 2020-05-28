@@ -13,8 +13,59 @@ import SwiftUI
 struct ContentView: View {
     
     //MARK: - properties
+    let symbols = ["gfx-bell","gfx-cherry","gfx-coin","gfx-grape","gfx-seven","gfx-strawberry",]
     
+    @State private var highscore: Int = 0
+    @State private var coins: Int = 100
+    @State private var betAmount: Int = 10
+    
+    @State private var reels: Array = [0,1,2]
     @State private var showingInfoView: Bool = false
+    
+    
+    //MARK: - functions
+    // spin reels
+    func spinReels(){
+        //reels[0] = Int.random(in: 0...symbols.count - 1)
+        //reels[1] = Int.random(in: 0...symbols.count - 1)
+        //reels[2] = Int.random(in: 0...symbols.count - 1)
+        
+        reels = reels.map({ _ in
+            Int.random(in: 0...symbols.count - 1)
+            
+        })
+    }
+    //check the winning
+    func checkWinning(){
+        if reels[0] == reels[1] &&  reels[1] == reels[2]  {
+            //player wins
+            playerWins()
+            //new highscore
+            print("here same data")
+            if coins > highscore {
+                newHighScore()
+            }
+            
+        }else {
+            //player loses
+            playerLoses()
+        }
+        
+    }
+    
+    func playerWins(){
+        coins += betAmount * 10
+    }
+    
+    func newHighScore(){
+        highscore = coins
+    }
+    
+    func playerLoses(){
+        coins -= betAmount
+    }
+    
+    //game is over
     
     //MARK: - body
     var body: some View {
@@ -40,7 +91,7 @@ struct ContentView: View {
                         Text("You\n Score")
                             .scoreLabelStyle()
                             .multilineTextAlignment(.trailing)
-                        Text("100")
+                        Text("\(coins)")
                             .scoreNumberLabelStyle()
                             .modifier(ScoreNumberModifier())
                         
@@ -50,7 +101,7 @@ struct ContentView: View {
                     
                     HStack(){
                         
-                        Text("200")
+                        Text("\(highscore)")
                             .scoreNumberLabelStyle()
                             .modifier(ScoreNumberModifier())
                         
@@ -67,7 +118,7 @@ struct ContentView: View {
                     //MARK: - reel #1
                     ZStack(){
                         ReelView()
-                        Image("gfx-bell")
+                        Image(symbols[reels[0]])
                             .resizable()
                             .modifier(ImageModifier())
                     }
@@ -76,7 +127,7 @@ struct ContentView: View {
                     HStack{
                         ZStack(){
                             ReelView()
-                            Image("gfx-seven")
+                            Image(symbols[reels[1]])
                                 .resizable()
                                 .modifier(ImageModifier())
                         }
@@ -84,7 +135,7 @@ struct ContentView: View {
                         ZStack(){
                             ReelView()
                             
-                            Image("gfx-cherry")
+                            Image(symbols[reels[2]])
                                 .resizable()
                                 .modifier(ImageModifier())
                         }
@@ -92,7 +143,10 @@ struct ContentView: View {
                     //MARK: - spin button
                     
                     Button(action: {
-                        print("spinner")
+                        self.spinReels()
+                        
+                        //check winning
+                        self.checkWinning()
                     }){
                         Image("gfx-spin")
                             .renderingMode(.original)
@@ -158,6 +212,7 @@ struct ContentView: View {
                         Image(systemName: "arrow.2.circlepath.circle")
                     }.modifier(ButtonModifier()),
                     alignment: .topLeading
+                    
                     
                     
                     
