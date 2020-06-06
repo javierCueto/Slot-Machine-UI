@@ -208,6 +208,8 @@ struct ContentView: View {
                     }.frame(maxWidth: 500)
                     //MARK: - spin button
                     
+                    Spacer()
+                    
                     Button(action: {
                         //1set the deafult state: no animatio
                         withAnimation{
@@ -294,7 +296,7 @@ struct ContentView: View {
                         self.resetGame()
                     }){
                         Image(systemName: "arrow.2.circlepath.circle")
-                    }.modifier(ButtonModifier()),
+                    }.modifier(ButtonModifier()).padding(.vertical,8),
                     alignment: .topLeading
                     
                     
@@ -306,7 +308,7 @@ struct ContentView: View {
                         self.showingInfoView = true
                     }){
                         Image(systemName: "info.circle")
-                    }.modifier(ButtonModifier()),
+                    }.modifier(ButtonModifier()).padding(.vertical,8),
                     alignment: .topTrailing
                     
                     

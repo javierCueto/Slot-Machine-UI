@@ -52,6 +52,7 @@
 		CFBC4913247B152B0015FB43 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		CFBC4915247B1CB40015FB43 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		CFC3E045248C34AA00DB5ED2 /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
+		CFC3E047248C47BA00DB5ED2 /* Slot Machine UI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Slot Machine UI.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +85,7 @@
 		CFBC48E9247B08550015FB43 /* Slot Machine UI */ = {
 			isa = PBXGroup;
 			children = (
+				CFC3E047248C47BA00DB5ED2 /* Slot Machine UI.entitlements */,
 				CFBC4910247B0AB80015FB43 /* Views */,
 				CFBC490F247B0AAF0015FB43 /* Helpers */,
 				CFBC490E247B0A930015FB43 /* Sounds */,
@@ -364,6 +366,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Slot Machine UI/Slot Machine UI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Slot Machine UI/Preview Content\"";
 				DEVELOPMENT_TEAM = TNSM43P2F3;
@@ -375,6 +378,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.javiercueto.Slot-Machine-UI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -384,6 +388,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Slot Machine UI/Slot Machine UI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Slot Machine UI/Preview Content\"";
 				DEVELOPMENT_TEAM = TNSM43P2F3;
@@ -395,6 +400,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.javiercueto.Slot-Machine-UI";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
