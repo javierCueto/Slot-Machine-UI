@@ -15,7 +15,9 @@ struct ContentView: View {
     //MARK: - properties
     let symbols = ["gfx-bell","gfx-cherry","gfx-coin","gfx-grape","gfx-seven","gfx-strawberry",]
     
-    @State private var highscore: Int = 0
+    let haptics = UINotificationFeedbackGenerator()
+    
+    @State private var highscore: Int = UserDefaults.standard.integer(forKey: "HighScore")
     @State private var coins: Int = 100
     @State private var betAmount: Int = 10
     
@@ -24,9 +26,11 @@ struct ContentView: View {
     
     @State private var isActivateBet10: Bool = true
     @State private var isActivateBet20: Bool = false
-    @State private var showingModal: Bool = true
+    @State private var showingModal: Bool = false
     
-    @State private var animatingModal: Bool = true
+    @State private var animatingModal: Bool = false
+    
+    @State private var animationSymbol: Bool =  false
     
     
     
@@ -41,6 +45,9 @@ struct ContentView: View {
             Int.random(in: 0...symbols.count - 1)
             
         })
+        
+        playSound(sound: "spin", type: "mp3")
+        haptics.notificationOccurred(.success)
     }
     //check the winning
     func checkWinning(){
@@ -51,6 +58,8 @@ struct ContentView: View {
             print("here same data")
             if coins > highscore {
                 newHighScore()
+            }else{
+                playSound(sound: "win", type: "mp3")
             }
             
         }else {
@@ -66,6 +75,8 @@ struct ContentView: View {
     
     func newHighScore(){
         highscore = coins
+        UserDefaults.standard.set(highscore, forKey: "HighScore")
+        playSound(sound: "high-score", type: "mp3")
     }
     
     func playerLoses(){
@@ -76,19 +87,31 @@ struct ContentView: View {
         betAmount = 20
         isActivateBet20 = true
         isActivateBet10 = false
+        playSound(sound: "casino-chips", type: "mp3")
+        haptics.notificationOccurred(.success)
     }
     
     func activateBet10(){
         betAmount = 10
         isActivateBet20 = false
         isActivateBet10 = true
+        playSound(sound: "casino-chips", type: "mp3")
+        haptics.notificationOccurred(.success)
     }
     
     //game is over
     func isGameOver(){
         if coins <= 0 {
             showingModal = true
+            playSound(sound: "game-over", type: "mp3")
         }
+    }
+    
+    func resetGame(){
+        UserDefaults.standard.set(0, forKey: "HighScore")
+        highscore = 0
+        activateBet10()
+        playSound(sound: "chimeup", type: "mp3")
     }
     
     //MARK: - body
@@ -145,6 +168,13 @@ struct ContentView: View {
                         Image(symbols[reels[0]])
                             .resizable()
                             .modifier(ImageModifier())
+                            .opacity(self.animationSymbol ? 1: 0)
+                            .offset(y: self.animationSymbol ? 0 : -50)
+                            .animation(.easeOut(duration : Double.random(in: 0.5...0.7)))
+                            .onAppear(perform: {
+                                self.animationSymbol.toggle()
+                                playSound(sound: "riseup", type: "mp3")
+                            })
                     }
                     Spacer()
                     //MARK: - reel #2
@@ -154,6 +184,12 @@ struct ContentView: View {
                             Image(symbols[reels[1]])
                                 .resizable()
                                 .modifier(ImageModifier())
+                                .opacity(self.animationSymbol ? 1: 0)
+                                .offset(y: self.animationSymbol ? 0 : -50)
+                                .animation(.easeOut(duration : Double.random(in: 0.7...0.9)))
+                                .onAppear(perform: {
+                                    self.animationSymbol.toggle()
+                                })
                         }
                         //MARK: - reel #3
                         ZStack(){
@@ -162,17 +198,33 @@ struct ContentView: View {
                             Image(symbols[reels[2]])
                                 .resizable()
                                 .modifier(ImageModifier())
+                                .opacity(self.animationSymbol ? 1: 0)
+                                .offset(y: self.animationSymbol ? 0 : -50)
+                                .animation(.easeOut(duration : Double.random(in: 0.9...1.1)))
+                                .onAppear(perform: {
+                                    self.animationSymbol.toggle()
+                                })
                         }
                     }.frame(maxWidth: 500)
                     //MARK: - spin button
                     
                     Button(action: {
+                        //1set the deafult state: no animatio
+                        withAnimation{
+                            self.animationSymbol = false
+                        }
+                        //2sping the reels
                         self.spinReels()
                         
-                        //check winning
+                        //3 trigger the animation after changing the symbols
+                        withAnimation{
+                            self.animationSymbol = true
+                        }
+                        
+                        //4 check winning
                         self.checkWinning()
                         
-                        // game over
+                        //5. game over
                         self.isGameOver()
                     }){
                         Image("gfx-spin")
@@ -204,14 +256,17 @@ struct ContentView: View {
                         
                         Image("gfx-casino-chips")
                             .resizable()
+                            .offset(x: isActivateBet20 ? 0 : 20)
                             .opacity(isActivateBet20 ? 1 :0)
                             .modifier(CasinoChipsModifier())
                     }
                     
+                    Spacer()
                     //MARK: - bet 10
                     HStack(spacing: 10) {
                         Image("gfx-casino-chips")
                             .resizable()
+                            .offset(x: isActivateBet10 ? 0 : -20)
                             .opacity(isActivateBet10 ? 1 :0)
                             .modifier(CasinoChipsModifier())
                         
@@ -236,7 +291,7 @@ struct ContentView: View {
                 //MARK: - buttons
                 .overlay(
                     Button(action: {
-                        print("reset the game")
+                        self.resetGame()
                     }){
                         Image(systemName: "arrow.2.circlepath.circle")
                     }.modifier(ButtonModifier()),

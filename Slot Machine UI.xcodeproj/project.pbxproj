@@ -26,6 +26,7 @@
 		CFBC4912247B10330015FB43 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC4911247B10330015FB43 /* LogoView.swift */; };
 		CFBC4914247B152B0015FB43 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC4913247B152B0015FB43 /* Modifiers.swift */; };
 		CFBC4916247B1CB40015FB43 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC4915247B1CB40015FB43 /* Extentions.swift */; };
+		CFC3E046248C34AA00DB5ED2 /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC3E045248C34AA00DB5ED2 /* PlaySound.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		CFBC4911247B10330015FB43 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		CFBC4913247B152B0015FB43 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		CFBC4915247B1CB40015FB43 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
+		CFC3E045248C34AA00DB5ED2 /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 			children = (
 				CFBC4913247B152B0015FB43 /* Modifiers.swift */,
 				CFBC4915247B1CB40015FB43 /* Extentions.swift */,
+				CFC3E045248C34AA00DB5ED2 /* PlaySound.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF884337247F2DC4001202BD /* InfoView.swift in Sources */,
+				CFC3E046248C34AA00DB5ED2 /* PlaySound.swift in Sources */,
 				CFBC48EB247B08550015FB43 /* AppDelegate.swift in Sources */,
 				CFBC4912247B10330015FB43 /* LogoView.swift in Sources */,
 				CFBC4916247B1CB40015FB43 /* Extentions.swift in Sources */,
